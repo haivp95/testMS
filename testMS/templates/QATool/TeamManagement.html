@@ -1,0 +1,93 @@
+{%extends 'Dashboard.html'%}
+{% load static %}
+{% block content %}
+<!-- Main content -->
+<section class="content">
+    <!-- SELECT2 EXAMPLE -->
+    <div class="box box-danger">
+        <!-- /.box-header -->
+        <form class="form-horizontal">
+            <div class="box-body">
+                <!--<div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" style="text-align: left;">Team</label>
+                            <div class="col-sm-10">
+                                <select onchange="TeamManagement_team_select_change(this);" class="form-control" style="width: 100%;" id="TeamManagement_team_select">
+                                    <option value="0" selected="selected">Name</option>
+                                    {% for team in teams %}
+                                    <option value="{{ team.ID }}">{{ team.NAME }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary" id="" style="width: 100%;">Search</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" style="text-align: left;">Operator</label>
+                            <div class="col-sm-10">
+                                <select class="form-control select2" style="width: 100%;" id="TeamManagement_operator_select">
+                                    <option selected="selected">Alabama</option>
+                                    <option>Alaska</option>
+                                    <option>California</option>
+                                    <option>Delaware</option>
+                                    <option>Tennessee</option>
+                                    <option>Texas</option>
+                                    <option>Washington</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary" id="" style="width: 100%;">Add</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary" id="" style="width: 100%;">Cancel</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary" id="" style="width: 100%;">Save</button>
+                        </div>
+                    </div>
+                </div> -->
+                
+                <table id="TeamManageTable" class="table table-bordered table-hover dataTable">
+                    <thead>
+                        <tr>
+                            <th>HR Code</th>
+                            <th>Username</th>
+                            <th>Fullname</th>
+                            <th>Team</th>
+                            <th>Sub-team</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for operator in operators %}
+                        <tr>
+                            <td>{{ operator.ID }}</td>
+                            <td>{{ operator.USER_LDAP }}</td>
+                            <td>{{ operator.FULL_NAME }}</td>
+                            <td>{{ operator.TEAM_NAME }}</td>
+                            <td>{{ operator.SUBTEAM_NAME }}</td>
+                            <td>{{ operator.START_WORKING_DATE }}</td>
+                            <td>{{ operator.LAST_WORKING_DATE }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </form>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+</section>
+{% endblock %}

@@ -1,0 +1,105 @@
+{%extends 'index.html'%} 
+{% load static %} 
+{% block content%}
+<section class="content-header">
+    <h1>
+        {{ request.session.lang_content.feedback }}
+        <small>{{ request.session.lang_content.feedback2 }}</small>
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- SELECT2 EXAMPLE -->
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title"></h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <!--<button type="button" class="btn btn-box-tool" data-widget="remove">
+                    <i class="fa fa-remove"></i>
+                </button> -->
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>{{ request.session.lang_content.From }}</label>
+
+                        <div class="input-group date" id="date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control pull-right" id="fromdatepicker" readonly>
+                        </div>
+                        <p style="color: red" id="from_validate" hidden><i class="fa fa-exclamation-triangle"></i> {{ request.session.lang_content.vldate1 }}</p>
+                        <p style="color: red" id="compare_validate" hidden><i class="fa fa-exclamation-triangle"></i> {{ request.session.lang_content.vldate2 }}</p>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>{{ request.session.lang_content.To }}</label>
+
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control pull-right" id="todatepicker" readonly>
+                        </div>
+                        <p style="color: red" id="to_validate" hidden><i class="fa fa-exclamation-triangle"></i> {{ request.session.lang_content.vldate1 }}</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>{{ request.session.lang_content.Username }}</label>
+                        <select class="form-control" style="width: 100%;" id="CSUser">
+                            <option selected="selected" id="empty">Name</option>
+                            {% for employ in csEmployee %}
+                            <option id="{{ employ.USERNAME }}">{{ employ.FULL_NAME }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <button type="button" class="btn btn-primary" id="showBtn">{{ request.session.lang_content.showbtn }}</button>
+        </div>
+    </div>
+    <!-- /.box -->
+
+    <div class="row" style="display: none; margin-top: 50px;" id="result">
+        <div class="col-xs-12">
+            <div class="box box-info">
+                <div class="box-header" id="feedback_rp_header">
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove">
+                            <i class="fa fa-remove"></i>                                
+                        </button>
+                   </div>
+                    <!--<button class="btn btn-default xls" id="export">{{ request.session.lang_content.expdatabtn }}                       
+                    </button>-->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" id="data">
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+</section> 
+{% endblock %}

@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>MIS Tools | OPS</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+  <!-- Font Awesome new icon-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}"> -->
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{% static 'bower_components/Ionicons/css/ionicons.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{% static 'bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'bower_components/datatables.net/css/buttons.dataTables.min.css' %}">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="{% static 'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' %}">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="{% static 'dist/css/skins/_all-skins.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/report_page.css' %}">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+
+    <header class="main-header">
+      <!-- Logo -->
+      <a href="{% url 'homepage' %}" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini">
+          <b>MIS</b>
+        </span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg">
+          <b>MIS</b>Tools</span>
+      </a>
+      <!-- Header Navbar: style can be found in header.less -->
+      <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <!-- Messages: style can be found in dropdown.less-->
+
+            <!-- Notifications: style can be found in dropdown.less -->
+
+            <!-- Tasks: style can be found in dropdown.less -->
+
+            <!-- User Account: style can be found in dropdown.less -->
+            <li class="dropdown user user-menu" style="display: inline-block;">
+              <input type="image" src="{% static 'dist/img/flag_vn1.png' %}" 
+              style="height: 25px; margin-top: 13px" onclick="changeLanguage(this.id)" id="vn">
+            </li>
+            <li class="dropdown user user-menu" style="display: inline-block;">
+              <input type="image" src="{% static 'dist/img/flag_uk1.png' %}" 
+              style="height: 20px; margin-top: 15px" onclick="changeLanguage(this.id)" id="en">
+            </li>
+            <li class="dropdown user user-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="user-image" alt="User Image">
+                <span class="hidden-xs">{{ request.session.displayName }}</span>
+              </a>
+              <ul class="dropdown-menu">
+                <!-- User image -->
+                <li class="user-header">
+                  <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle" alt="User Image">
+
+                  <p>
+                    {{ request.session.fullName }}
+                    <small>{{ request.session.title }}</small>
+                    <small>{{ request.session.department }}</small>
+                  </p>
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                  <div class="pull-left">
+                    <a href="#" class="btn btn-default btn-flat">{{ request.session.lang_content.Profile }}</a>
+                  </div>
+                  <div class="pull-right">
+                    <a href="{% url 'Logout' %}" class="btn btn-default btn-flat">{{ request.session.lang_content.Signout }}</a>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <!-- Control Sidebar Toggle Button -->
+
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <!-- =============================================== -->
+
+    <!-- Left side column. contains the sidebar -->
+    <!-- =============================================== -->
+
+    <!-- Content Wrapper. Contains page content -->
+    
+
+      {% block content %}{% endblock content %}
+      <!-- /.content -->
+    
+    <!-- /.content-wrapper -->
+
+    
+
+    <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+  </div>
+  <!-- ./wrapper -->
+</body>
+<!-- jQuery 3 -->
+<script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<!-- SlimScroll -->
+<script src="{% static 'bower_components/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'bower_components/fastclick/lib/fastclick.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dist/js/demo.js' %}"></script>
+<!-- DataTables -->
+<script src="{% static 'bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+<!--<script src="{% static 'js/xlsx.core.js' %}"></script>
+<script src="{% static 'js/Blob.js' %}"></script>
+<script src="{% static 'js/FileSaver.js' %}"></script>
+<script src="{% static 'js/tableexport.js' %}"></script>-->
+<!-- bootstrap datepicker -->
+<script src="{% static 'bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js' %}"></script>
+<script src="{% static 'bower_components/datatables.net/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'bower_components/datatables.net/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'bower_components/datatables.net/js/jszip.min.js' %}"></script>
+<script src="{% static 'bower_components/datatables.net/js/pdfmake.min.js' %}"></script>
+<script src="{% static 'bower_components/datatables.net/js/vfs_fonts.js' %}"></script>
+
+
+<script>
+  function changeLanguage(id){
+    $.ajax({
+      type: 'POST',
+      url: "{% url 'language' %}",
+      data: JSON.stringify({
+        lang: id
+      }),
+      success: function (data) {
+        console.log('success', data);
+        location.reload();
+      },
+      error: function (exception) {
+        alert('Oops! Something went wrong.');
+        console.log('ERROR', exception);
+      }
+    });
+  }
+</script>
+
+</html>

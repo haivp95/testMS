@@ -1,0 +1,249 @@
+{% extends 'index.html' %} {% block content %}
+<section class="content-header">
+    <h1>
+        {{ request.session.lang_content.rplist }}
+    </h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                        {% if 'Admin' in request.session.group %}
+                        <button type="button" class="btn btn-success btn-md" 
+                            id="showInfo" data-toggle ="modal" data-target="#add-report-modal"
+                            style="padding-top: 3px; padding-bottom: 3px;">
+                            <i class="fa fa-plus" style="padding-right: 3px;"></i>
+                            <strong>{{ request.session.lang_content.Add }}</strong>
+                        </button>
+                        {% endif %}
+                </div>
+                <div class="box-body">
+                    <table id="reportTable" class="table table-bordered table-hover dataTable">
+                        <thead>
+                            <tr>
+                                <th>{{ request.session.lang_content.Name }}</th>
+                                <th>{{ request.session.lang_content.Des }}</th>
+                                <th style="text-align: center;">{{ request.session.lang_content.Export }}</th>
+                                {% if 'Admin' in request.session.group %}
+                                <th style="text-align: center;">{{ request.session.lang_content.Edit }}</th>
+                                <th style="text-align: center;">{{ request.session.lang_content.Del }}</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rp in reports %}
+                            <tr>
+                                <td>{{ rp.NAME }}</td>
+                                <td>{{ rp.DSC }}</td>
+                                <td class="custom_td">
+                                    <button type="button" class="custom_btn btn btn btn-success btn-block btn-default btn-xs fa fa-download" 
+                                        id="btnEdit" data-toggle ="modal" data-target="#{{ rp.ID }}-{{ rp.NAME }}">
+                                    </button>
+                                </td>
+                                {% if 'Admin' in request.session.group %}
+                                <td class="custom_td">
+                                    <button type="button" class="custom_btn btn btn btn-primary btn-block btn-default btn-xs fa fa-edit" 
+                                        id="btnEdit">
+                                    </button>
+                                </td>
+                                <td class="custom_td">
+                                    <button type="button" class="custom_btn btn btn btn-danger btn-block btn-default btn-xs fa fa-trash" 
+                                        id="btnDel" onclick="delReport('{{ rp.ID }}')">
+                                    </button>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            <div class="modal fade" id="{{ rp.ID }}-{{ rp.NAME }}">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                          <h4 class="modal-title"><strong>{{ rp.NAME }}</strong></h4>
+                                        </div>
+                                        <form action="{% url 'execute' %}" method="POST">
+                                                {% csrf_token %}
+                                        <div class="modal-body">
+                                            <input type="hidden" class="custom_input" name="rp_id" id="rp_id" value="{{ rp.ID }}">
+                                            <input type="hidden" class="custom_input" name="rp_name" id="rp_name" value="{{ rp.NAME }}">
+                                            <input type="hidden" class="custom_input" name="rp_query" id="rp_query" value="{{ rp.SQLQUERY }}">
+                                            <input type="hidden" class="custom_input" name="hasParam" id="hasParam" value="{{ rp.HAS_PARAMETER }}">
+                                            {% for param in params %}
+                                            {% if param.REPORTID == rp.ID%}
+
+                                            {% if param.DATATYPE == 'String' %}
+                                            <div>
+                                            <label for="param_name">{{ param.NAME }}</label>
+                                            <input type="text" class="custom_input" name="param_value" id="param_values">
+                                            <input type="hidden" class="custom_input" name="param_name" id="param_name" value="{{ param.NAME }}">
+                                            <p name="hidden_type" hidden>{{ param.DATATYPE }}</p>
+                                            <small style="padding: 0px 0px 5px; margin: 0px 0 8px; display: inline-block; width: 100%;">{{ param.HINT }}</small>
+                                            </div>
+                                            {% endif %}
+
+                                            {% if param.DATATYPE == 'Date' %}
+                                            <div>
+                                                <input type="hidden" class="custom_input" name="date_param_name" id="date_param_name" value="{{ param.NAME }}"> 
+                                                <p name="hidden_type" hidden>{{ param.DATATYPE }}</p>
+                                                <p name="hidden_param_name" hidden>{{ param.NAME }}</p>
+                                                <div class="form-group">
+                                                    <label>{{ request.session.lang_content.From }}</label>
+                                
+                                                    <div class="input-group date">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+                                                        <input type="text" class="form-control pull-right" id="fromdatepicker_{{ param.REPORTID }}" name="from_date" readonly>
+                                                    </div>
+                                                    <p style="color: red" id="from_validate_{{ param.REPORTID }}" hidden><i class="fa fa-exclamation-triangle"></i> {{ request.session.lang_content.vldate1 }}</p>
+                                                    <p style="color: red" id="compare_validate_{{ param.REPORTID }}" hidden><i class="fa fa-exclamation-triangle"></i> {{ request.session.lang_content.vldate2 }}</p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>{{ request.session.lang_content.To }}</label>
+                                    
+                                                    <div class="input-group date">
+                                                        <div class="input-group-addon">
+                                                            <i class="fa fa-calendar"></i>
+                                                        </div>
+                                                        <input type="text" class="form-control pull-right" id="todatepicker_{{ param.REPORTID }}" name="to_date" readonly>
+                                                    </div>
+                                                    <p style="color: red" id="to_validate_{{ param.REPORTID }}" hidden><i class="fa fa-exclamation-triangle"></i> {{ request.session.lang_content.vldate1 }}</p>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+
+                                            {% endif %}
+                                            {% endfor %}                
+                                        </div>
+                                        <div class="modal-footer">
+
+                                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                            <!--<button type="button" class="btn btn-primary pull-right" id="saveLocal_{{ rp.ID }}_{{ rp.NAME }}" 
+                                                onclick="exportReport('{{ rp.ID }}', '{{ rp.NAME }}', '{{ rp.SQLQUERY }}')">Export</button>-->
+                                            <input type="submit" class="btn btn-primary pull-right" name="btnExport" value="Export">
+
+                                                    
+                                            <div class="spinner" id="spinner_{{ rp.ID }}_{{ rp.NAME }}" style="visibility: hidden;">                                              
+                                                <div class="spinner-circle spinner-circle-outer"></div>                                        
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                    </form>
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+                            {% endfor %}
+                        </tbody>
+                        <!--<tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>-->
+                    </table>
+                </div>
+                <div class="modal fade" id="add-report-modal">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title"><strong>Report Information</strong></h4>
+                        </div>
+                        <div class="modal-body">
+                            <label for="rp_name">Report Name:</label><p style="color: red" id="check_exist_validate" hidden><i class="fa fa-exclamation-triangle"></i> Invalid name.</p>
+                            <input type="text" class="custom_input" name="rq_name" id="rp_name">
+                            <p style="color: red" id="rp_name_validate" hidden><i class="fa fa-exclamation-triangle"></i> This field cannot be empty, please enter a valid name.</p>
+
+                            <label for="rp_dsc">Description:</label>
+                            <input type="text" class="custom_input" name="rq_dsc" id="rp_dsc">
+                            <p style="color: red" id="rp_dsc_validate" hidden><i class="fa fa-exclamation-triangle"></i> This field cannot be empty, please enter a valid description.</p>
+
+                            <label for="rp_query">Query:</label><br/>
+                            <textarea name="rq_query" 
+                            id="rp_query" cols="90" rows="3"
+                            style="padding: 12px 20px;
+                                    margin: 8px 0 10px;
+                                    border: 1px solid #ccc;
+                                    border-radius: 4px;
+                                    width: 100%"></textarea>
+                            <p style="color: red" id="rp_query_validate" hidden><i class="fa fa-exclamation-triangle"></i> This field cannot be empty, please enter a valid query.</p>        
+                            <br/>
+                            <!--<input type="text" class="custom_input query_input" name="query" id="rp_query">-->
+
+
+                            <label for="check_param" style="margin-bottom: 10px;" class="btn btn-info"><strong>Has Paramater</strong>
+                                <input type="checkbox" id="check_param" class="badgebox" onchange="onChecked()">
+                                <span class="badge">&check;</span>
+                            </label><br/>
+
+                            <div class="box" style="display: none" id="param_div">
+                                <div class="box-header">
+                                    <button type="button" class="btn btn-success btn-sm" id="addParam">
+                                        <i class="fa fa-plus" style="padding-right: 3px;"></i>
+                                        <strong>Add Parameter</strong>
+                                        <!--<strong>{{ request.session.lang_content.Add }}</strong>-->
+                                    </button>
+                                </div>                              
+                                <div class="box-body">
+                                    <table id="paramTable" class="table table-bordered table-hover dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Data Type</th>
+                                                <th>Hint</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>                               
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary" id="addReport">Save changes</button>
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                  </div>
+                  <!-- /.modal -->
+                  <div class="modal fade" id="del-report-modal" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog" align="center">
+                      <div class="modal-content" style="width: 70%; border-radius: 15px;">
+                        <div class="modal-header">
+                            <h4 class="modal-title pull-left"><strong>Confirm Delete?</strong></h4>
+                        </div>
+                        <div class="modal-body">
+                            <h4>This cannot be undone. Are you sure you want to delete this report ?</h4>
+                        </div>
+                        <div class="modal-footer">
+
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-warning" data-dismiss="modal" style="width: 100%; border-radius: 5px;">No</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-primary" id="yesBtn" style="width: 100%; border-radius: 5px;">Yes</button>
+                            </div>                
+                        </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                  </div>
+                  <!-- /.modal -->
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

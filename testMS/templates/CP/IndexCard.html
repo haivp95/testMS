@@ -1,0 +1,87 @@
+{% extends 'index.html' %} {% block content %}
+<section class="content-header">
+      <h1>
+
+            <!--<small>advanced tables</small>-->
+      </h1>
+</section>
+<section class="content">
+      <div class="row">
+            <div class="col-xs-12">
+                  <div class="box box-primary">
+                        <div class="box-header" id="vnp_header">
+                              <div class="col-md-2">
+                                    {% if data|length > 0 %}
+                                    <button type="button" class="btn btn-block btn-warning" id="sendCard">{{ request.session.lang_content.SendSMS }}</button>
+                                    {% else %}
+                                    <button type="button" class="btn btn-block btn-warning" id="sendCard" disabled>{{ request.session.lang_content.SendSMS }}</button>
+                                    {% endif %}
+                              </div>
+                              <div class="col-md-2">
+                                    <!--{% if data|length > 0 %}
+                                    <button class="btn btn-block btn-default xls" id="exportVNPostData">{{ request.session.lang_content.expdatabtn }}</button>
+                                    {% else %}
+                                    <button class="btn btn-block btn-default xls" id="exportVNPostData" disabled>{{ request.session.lang_content.expdatabtn }}</button>
+                                    {% endif %}-->
+                              </div>
+                        </div>
+                        <div class="box-body">
+                              <table id="VNPostTable" class="table table-bordered table-hover">
+                                    <thead>
+                                          <tr>
+                                                <th>{{ request.session.lang_content.CN }}</th>
+                                                <th>{{ request.session.lang_content.ITC }}</th>
+                                                <th>{{ request.session.lang_content.PN }}</th>
+                                                <th>{{ request.session.lang_content.MSGContent }}</th>
+                                          </tr>
+                                    </thead>
+                                    <tbody>
+                                          {% for dict_item in data %}
+                                          <tr>
+
+                                                {% for key, value in dict_item.items %}
+                                                <td>{{ value }}</td>
+                                                {% endfor %}
+                                                <td>
+                                                      Buu dien khong phat duoc The tin dung cua Quy khach. Ma buu pham cua KH la: <strong>{{ dict_item.ITEM_CODE }}</strong>. Vui long lien he so (024) 38165018 - 0915233199 de nhan
+                                                </td>
+
+                                          </tr>
+                                          {% endfor %}
+                                    </tbody>
+                                    <!--<tfoot>
+                                                <tr>
+                                                      <th>CONTRACT NUMBER</th>
+                                                      <th>ITEM CODE</th>
+                                                      <th>PHONE NUMBER</th>
+                                                      <th>MESSAGE CONTENT</th>
+                                                </tr>
+                                          </tfoot>-->
+                              </table>
+                        </div>
+                  </div>
+            </div>
+      </div>
+      <div class="modal fade" id="modal-card-result">
+            <div class="modal-dialog">
+                  <div class="modal-content">
+                        <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                              </button>
+                              <h4 class="modal-title">Result</h4>
+                        </div>
+                        <div class="modal-body">
+                              <p id="content"></p>
+                        </div>
+                        <div class="modal-footer">
+                              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                              <!--<button type="button" class="btn btn-primary">Save changes</button> -->
+                        </div>
+                  </div>
+                  <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+      </div>
+</section>
+{% endblock %}

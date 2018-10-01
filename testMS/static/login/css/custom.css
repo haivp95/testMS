@@ -1,0 +1,48 @@
+tfoot option {
+    width: 100%;
+    padding: 3px;
+    box-sizing: border-box;
+}
+ 
+tfoot {
+    display: table-header-group;
+}
+ 
+.multiselect {
+    width: 140px;
+}
+ 
+.selectBox {
+    position: relative;
+    width: 140px;
+}
+ 
+.selectBox select {
+    width: 140px;
+}
+ 
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+ 
+#checkboxes {
+    border: 1px #2C92F7 solid;  
+    background-color: #ffffff;
+}
+ 
+#checkboxes label {
+    font-family: Arial;
+    font-size: 13px;
+    font-weight:400;
+    color: #676a6c;
+    display: block;
+}
+ 
+#checkboxes label:hover {
+    display: block;
+    background-color: #2C92F7;
+}

@@ -1,0 +1,90 @@
+{%extends 'index.html'%} 
+{% load static %} 
+{% block content%}
+
+<section class="content-header">
+    <h1>
+        Online Chat
+        <small></small>
+    </h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6" >
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Conversation Information</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form role="form">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="clientName">Client</label>
+                            <input type="text" class="form-control" placeholder="Enter client name ..." id="clientName">
+                            <p style="color: red" id="client_validate" hidden><i class="fa fa-exclamation-triangle"></i> Client Name cannot be null.</p>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="clientCheck"> New Client
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Contract Number</label>
+                            <input type="text" class="form-control" maxlength="10" minlength="10" pattern="^[0-9]+$" placeholder="1234567890" id="contractNumber">
+                            <p style="color: red" id="contract_validate" hidden><i class="fa fa-exclamation-triangle"></i> Contract Number cannot be null.</p>
+                            <p style="color: red" id="contract_validate_input" hidden><i class="fa fa-exclamation-triangle"></i> Contract Number must be 10 characters and contains only number.</p>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="radio-inline">
+                                <input type="radio" name="optionReason" id="optionInquiry" value="Inquiry" checked>
+                                Inquiry
+                            </label>
+
+                            <label class="radio-inline">
+                                <input type="radio" name="optionReason" id="optionComplaint" value="Complaint">
+                                Complaint
+                            </label>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Select</label>
+                            <select class="form-control" id="reasonSelect">
+                                {% for inquiry in inquiries %}
+                                <option>{{ inquiry.REASON }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>              
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" id="OnlchatSubmitBtn">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+    <div class="modal fade" id="online-chat-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6" style="text-align: center;">
+                            <h3><strong>Submit successfull <i class='fa fa-check' style='color: #00a65a'></i></strong></h3>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</section> 
+{% endblock %}
