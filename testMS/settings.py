@@ -174,7 +174,7 @@ DEFAULT_CHARSET = 'utf-8'
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static_resources')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_resources')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "testMS/static/login/"),
     # '/hungnn/GitLab/OPS_MIS/Py Thông/testMS/testMS/static/login/',
