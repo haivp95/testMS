@@ -9,7 +9,7 @@ cx-Oracle==6.3.1
 Django==1.11
 django-auth-ldap==1.7.0
 django-celery-beat==1.1.1
-django-celery-results==1.0.1
+django-celery-results==2.4.0
 idna==2.7
 isort==4.3.4
 kombu==4.2.1
